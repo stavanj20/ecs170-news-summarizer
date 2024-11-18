@@ -4,7 +4,7 @@ from openai import OpenAI
 from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
 from pathlib import Path
-
+import streamlit as st
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -16,6 +16,10 @@ client = OpenAI()
 @app.route('/')
 def index():
     return render_template('index.html')
+
+st.title("NumberOne Text Summarization")
+
+
 
 @app.route('/summarize', methods=['POST'])
 def summarize():
