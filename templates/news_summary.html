@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Interface</title>
+    <style>
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Title styling */
+        #title {
+            margin-top: 15vh; /* Approximately 1/4th from the top */
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        /* Chat container */
+        #chat-container {
+            flex: 1;
+            display: none; /* Hidden initially */
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 0 20px;
+            overflow-y: auto;
+        }
+        /* Messages styling */
+        #messages {
+            margin-top: 20px; /* Add top margin to separate from header */
+            margin-bottom: 10px;
+        }
+        .message {
+            margin-bottom: 10px;
+            max-width: 60%;
+            padding: 10px;
+            border-radius: 10px;
+            word-wrap: break-word;
+        }
+        .user-message {
+            align-self: flex-end;
+            background-color: #007BFF;
+            color: white;
+        }
+        /* Input area */
+        #input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+        #input-field {
+            width: 70%;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            outline: none;
+        }
+        #input-field:focus {
+            border-color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <!-- Title -->
+    <div id="title">Let's catch you up!</div>
+    <!-- Input area -->
+    <div id="input-container">
+        <input type="text" id="input-field" placeholder="Type your message here..." autocomplete="off">
+    </div>
+    <!-- Chat messages area -->
+    <div id="chat-container">
+        <div id="messages"></div>
+    </div>
+    <!-- JavaScript -->
+    <script>
+        // Elements
+        const title = document.getElementById('title');
+        const inputContainer = document.getElementById('input-container');
+        const inputField = document.getElementById('input-field');
+        const chatContainer = document.getElementById('chat-container');
+        const messagesContainer = document.getElementById('messages');
+
+        // Function to handle input submission
+        function handleInput() {
+            const messageText = inputField.value.trim();
+            if (messageText === '') return;
+
+            // Display user's message
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'message user-message';
+            userMessageDiv.textContent = messageText;
+            messagesContainer.appendChild(userMessageDiv);
+
+            // Clear input field
+            inputField.value = '';
+
+            // Show chat container if it's hidden
+            if (chatContainer.style.display === 'none') {
+                chatContainer.style.display = 'flex';
+                // Move input container to bottom
+                document.body.appendChild(inputContainer);
+                // Adjust styling if needed
+                inputContainer.style.padding = '10px';
+                inputContainer.style.borderTop = '1px solid #ccc';
+            }
+
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Event listener for input field
+        inputField.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleInput();
+            }
+        });
+    </script>
+</body>
+</html>
